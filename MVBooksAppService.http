@@ -1,0 +1,6 @@
+@MVBooksAppService_HostAddress = http://localhost:5106
+
+GET {{MVBooksAppService_HostAddress}}/books/
+Accept: application/json
+
+###
