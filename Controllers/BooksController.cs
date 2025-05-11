@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MVBooksAppService.Data;
 using MVBooksAppService.Models;
 
 namespace MVBooksAppService.Controllers
@@ -6,12 +7,14 @@ namespace MVBooksAppService.Controllers
     [ApiController]
     [Route("[controller]")]
     public class BooksController : ControllerBase
-    {        
+    {
         private readonly ILogger<BooksController> _logger;
+        private readonly MVBooksDbContext _dbContext;
 
-        public BooksController(ILogger<BooksController> logger)
+        public BooksController(ILogger<BooksController> logger, MVBooksDbContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         [HttpGet(Name = "GetBooks")]
@@ -28,7 +31,7 @@ namespace MVBooksAppService.Controllers
                 PageCount = Random.Shared.Next(100, 1000),
                 Publisher = $"Publisher {index}",
                 Price = (decimal)(Random.Shared.NextDouble() * 100)
-            })            
+            })
             .ToList());
         }
     }

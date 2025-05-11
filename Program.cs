@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MVBooksAppService.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<MVBooksDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("MVBooksDbContext") 
+            ?? throw new InvalidOperationException("Connection string 'MVBooksDbContext' not found.")));
 
 // Add services to the container.
 
@@ -14,10 +22,19 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 //app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+
+// set metadata to blob 
+
+//await blobClient.SetMetadataAsync(new Dictionary<string, string>
+//{
+//    { "Resolution", "1920x1080" },
+//    { "ColorProfile", "sRGB" }
+//});
