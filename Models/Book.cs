@@ -11,4 +11,6 @@ public class Book
     public int PageCount { get; set; }
     public string Publisher { get; set; } = string.Empty;
     public decimal Price { get; set; }
+    public string BlobUrl { get; set; } = string.Empty;
+    public bool Enabled { get; set; } = true;
 }

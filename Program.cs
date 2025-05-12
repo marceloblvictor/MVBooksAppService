@@ -1,18 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MVBooksAppService.Data;
-var builder = WebApplication.CreateBuilder(args);
+using MVBooksAppService;
 
-builder.Services.AddDbContext<MVBooksDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("MVBooksDbContext") 
-            ?? throw new InvalidOperationException("Connection string 'MVBooksDbContext' not found.")));
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var cosmosConnectionString = builder.Configuration["CosmosDb:ConnectionString"];
+var cosmosKey = builder.Configuration["CosmosDb:Key"];
+var cosmosDatabaseName = builder.Configuration["CosmosDb:DatabaseName"];
+
+builder.Services.AddAzureCosmosDb(cosmosConnectionString, cosmosKey, cosmosDatabaseName);
+
 
 var app = builder.Build();
 
