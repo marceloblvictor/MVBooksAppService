@@ -30,13 +30,19 @@ namespace MVBooksAppService.Controllers
                 "select * from books b where p.Price > @price")
                 .WithParameter("@price", 10m);
 
+            var queryOptions = new QueryRequestOptions
+            {
+                MaxItemCount = 1,
+                PartitionKey = new PartitionKey("Author"),
+                MaxBufferedItemCount = 1,
+                MaxConcurrency = 1,
+                ConsistencyLevel = ConsistencyLevel.Strong
+            };
+            
+
             FeedIterator<Book> resultSet = _booksContainer.GetItemQueryIterator<Book>(
                 query,
-                requestOptions: new QueryRequestOptions()
-                {
-                    PartitionKey = new PartitionKey("Author"),
-                    MaxItemCount = 1
-                });
+                requestOptions: queryOptions);
 
             return Ok(resultSet);            
         }
