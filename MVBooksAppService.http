@@ -4,7 +4,6 @@ GET {{MVBooksAppService_HostAddress}}/books/
 Accept: application/json
 ###
 
-POST {{MVBooksAppService_HostAddress}}/books/  
-Content-Type: application/json  
-Accept: application/json  
+GET {{MVBooksAppService_HostAddress}}/books/5
+Accept: application/json
 ###
