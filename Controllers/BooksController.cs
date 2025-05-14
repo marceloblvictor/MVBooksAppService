@@ -54,7 +54,9 @@ namespace MVBooksAppService.Controllers
             
             //ItemResponse<Book> response = await _booksContainer.ReadItemAsync<Book>(id, new PartitionKey(authorName));            
 
-            return Ok("book succesfull: " + id.ToString());
+            string myNumber = System.Configuration.ConfigurationManager.AppSettings["MyNumber"];
+
+            return Ok("book succesfull: " + id.ToString() + "\n" + (myNumber ?? "Not found"));
         }
 
         [HttpPost(Name = "CreateBook")]
