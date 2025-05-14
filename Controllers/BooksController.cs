@@ -10,10 +10,12 @@ namespace MVBooksAppService.Controllers
     {
         private readonly ILogger<BooksController> _logger;
         private readonly Container _booksContainer;
+        private readonly IConfiguration _config;
 
-        public BooksController(ILogger<BooksController> logger)
+        public BooksController(ILogger<BooksController> logger, IConfiguration config)
         {
             _logger = logger;
+            _config = config;
             //_cosmosClient = cosmosClient;
 
             //Database database = _cosmosClient.CreateDatabaseIfNotExistsAsync("MyDatabaseName").Result;
@@ -54,9 +56,9 @@ namespace MVBooksAppService.Controllers
             
             //ItemResponse<Book> response = await _booksContainer.ReadItemAsync<Book>(id, new PartitionKey(authorName));            
 
-            string myNumber = System.Configuration.ConfigurationManager.AppSettings["MyNumber"];
+            string? myNumber =_config.GetValue<string>("MyNumber");
 
-            return Ok("book succesfull: " + id.ToString() + "\n" + (myNumber ?? "Not found"));
+            return Ok("book succesfull: " + id.ToString() + "\n" + (myNumber ?? "Not found2"));
         }
 
         [HttpPost(Name = "CreateBook")]
